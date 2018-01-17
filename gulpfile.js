@@ -1,19 +1,33 @@
+var path = require('path');
+var fs = require('fs');
+var pkg = JSON.parse(fs.readFileSync('./package.json'));
+var assetsPath = path.resolve(pkg.path.assetsDir);
+
 var gulp = require('gulp');
+
+// sass compiler
 var sass = require('gulp-sass');
 
-// SassとCssの保存先を指定
-gulp.task('scss', function(){
-  gulp.src('./scss/*.scss')
-    .pipe(sass({outputStyle: 'expanded'}))
-    .pipe(gulp.dest('./css/'));
+var sourcemaps =require('gulp-sourcemaps');
+
+// add vender prifix
+var autoprefixer = require('gulp-autoprefixer');
+
+// error handling
+var plumber = require('gulp-plumber');
+
+gulp.task('sass', function() {
+    gulp.src(path.join(assetsPath, 'sass/application.scss'))
+        .pipe(sourcemaps.init())
+        .pipe(plumber())
+        .pipe(sass())
+        .pipe(autoprefixer({
+            browsers: ["last 2 versions", "ie >= 10", "Android >= 4","ios_saf >= 9"],
+            cascade: false
+        }))
+        .pipe(gulp.dest(path.join(assetsPath, 'css/')));
 });
 
-//自動監視のタスクを作成(sass-watchと名付ける)
-gulp.task('scss-watch', ['sass'], function(){
-  var watcher = gulp.watch('./scss/*.scss', ['sass']);
-  watcher.on('change', function(event) {
-  });
+gulp.task('default', function() {
+    gulp.watch(path.join(assetsPath, 'sass/**/*.scss'),['sass']);
 });
-
-// タスク"task-watch"がgulpと入力しただけでdefaultで実行されるようになる
-gulp.task('default', ['sass-watch']);

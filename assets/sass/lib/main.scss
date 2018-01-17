@@ -1,0 +1,146 @@
+$set-prefix: '' , -moz- , -webkit- , -moz- , -o-;
+
+$breakpoint-s : 425px;
+$breakpoint-m : 768px;
+$breakpoint-l : 1024px;
+$breakpoint-xl : 1366px;
+
+
+$breakpoint-i5 : 320px;
+$breakpoint-i5a : 321px;
+$breakpoint-s4 : 360px;
+$breakpoint-s4a : 361px;
+$breakpoint-i6 : 375px;
+$breakpoint-i6a : 376px;
+$breakpoint-p6 : 414px;
+$breakpoint-p6a : 415px;
+$breakpoint-n7 : 600px;
+$breakpoint-n7a : 601px;
+$breakpoint-ip : 768px;
+$breakpoint-ipa : 769px;
+$breakpoint-n10 : 800px;
+
+
+
+
+@mixin PropertySetPrefix($name, $value) {
+
+  @each $prefix in $set-prefix {
+
+    #{$prefix}#{$name}: $value;
+
+  }
+
+}
+
+@mixin ValueSetPrefix($name, $value) {
+
+  @each $prefix in $set-prefix {
+
+    #{$name}: #{$prefix}$value;
+
+  }
+
+}
+
+@mixin section($bg-color,$height){
+  background-color: $bg-color;
+  height: $height;
+  @content
+}
+
+
+@mixin inner($width,$padding-updown,$padding-rihgtleft){
+  max-width: $width;
+  margin: 0 auto;
+  padding: $padding-updown $padding-rihgtleft;
+  overflow: hidden;
+  @content
+}
+
+@mixin xs($p,$v){
+  @media (max-width:$breakpoint-s){
+    #{$p}:$v;
+  }
+}
+@mixin s($p,$v){
+  @media (min-width:$breakpoint-s)and(max-width:$breakpoint-m){
+    #{$p}:$v;
+  }
+}
+@mixin m($p,$v){
+  @media (min-width:$breakpoint-m)and(max-width:$breakpoint-l){
+    #{$p}:$v;
+  }
+}
+@mixin l($p,$v){
+  @media (min-width:$breakpoint-l)and(max-width:$breakpoint-xl){
+    #{$p}:$v;
+  }
+}
+@mixin exl($p,$v){
+  @media (min-width:$breakpoint-xl){
+    #{$p}:$v;
+  }
+}
+
+@mixin media(
+  $propaty-value-array
+){
+  @include xs(nth($propaty-value-array,1),nth($propaty-value-array, 2));
+  @include s(nth($propaty-value-array,1),nth($propaty-value-array, 3));
+  @include m(nth($propaty-value-array,1),nth($propaty-value-array, 4));
+  @include l(nth($propaty-value-array,1),nth($propaty-value-array, 5));
+  @include exl(nth($propaty-value-array,1),nth($propaty-value-array, 6));
+}
+
+
+
+@mixin i5($p,$v){
+  @media (max-width:$breakpoint-i5){
+    #{$p}:$v;
+  }
+}
+@mixin s4($p,$v){
+  @media (min-width:$breakpoint-i5a)and(max-width:$breakpoint-s4){
+    #{$p}:$v;
+  }
+}
+@mixin i6($p,$v){
+  @media (min-width:$breakpoint-s4a)and(max-width:$breakpoint-i6){
+    #{$p}:$v;
+  }
+}
+@mixin p6($p,$v){
+  @media (min-width:$breakpoint-i6a)and(max-width:$breakpoint-p6){
+    #{$p}:$v;
+  }
+}
+@mixin n7($p,$v){
+  @media (min-width:$breakpoint-p6a)and(max-width:$breakpoint-n7){
+    #{$p}:$v;
+  }
+}
+@mixin ip($p,$v){
+  @media (min-width:$breakpoint-n7a)and(max-width:$breakpoint-ip){
+    #{$p}:$v;
+  }
+}
+@mixin n10($p,$v){
+  @media (min-width:$breakpoint-ipa)and(max-width:$breakpoint-n10){
+    #{$p}:$v;
+  }
+}
+
+
+@mixin sp(
+  $propaty-value-array
+){
+  @include i5(nth($propaty-value-array,1),nth($propaty-value-array, 2));
+  @include s4(nth($propaty-value-array,1),nth($propaty-value-array, 3));
+  @include i6(nth($propaty-value-array,1),nth($propaty-value-array, 4));
+  @include p6(nth($propaty-value-array,1),nth($propaty-value-array, 5));
+  @include n7(nth($propaty-value-array,1),nth($propaty-value-array, 6));
+  @include ip(nth($propaty-value-array,1),nth($propaty-value-array, 7));
+  @include n10(nth($propaty-value-array,1),nth($propaty-value-array, 8));
+}
